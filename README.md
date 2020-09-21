@@ -198,6 +198,56 @@ cAdvisor
     Auto-discovers all containers in the given node and collects CPU, memory, filesystem and network usage statistics
     Provides the overall machine usage by analyzing the root container on the machine 
 
+Prometheus 
+    open source systems monitoring and alerting toolkit 
+    query language that works really well for application-specific metrics
+
+You can save application monitoring data at a metrics endpoint - which prometheus queries in a timely manner 
+
+Both of these are linked to Grafana - open source tool to visualize monitoring data 
 
 
+# Authentication and Authorization 
+Information that Defines a User
+    Username: a string to identify the end user 
+    UID: an identifier that is more consistent or unique that username 
+    Group: a string that associates users with a set of commonly grouped users - used later by the authorization module 
+    Extra fields: a map of strings that hold additional information that might be used by the authorization system 
+    
+Authentication 
+    Does a user have access to the system 
+Authorization 
+    Can the user perform an action in the system 
 
+Authentication Modules 
+    Client certs - 
+        Authentication enabled by password the --client-ca-file=FILENAME option to the API server 
+        Referenced file must contain one or more certificate authorities to validate client certificates
+        The common name of a client certificate is used as the user name for the request 
+    Static token files(static password file)
+        Use --token-auth-file=FILE_WITH_TOKEN option on the command line 
+        Token file is a CSV file with four columns: token, username, user UID, followed by optional group names:
+            token,user,UID,"group1,group2,group3"
+    OpenID Connect 
+        If you already have Open ID or Active Directory in your org, take a look at OpenID Connect token 
+        Scope of this feature is past the course, but look at exercise files for more details 
+    Webhook mode 
+        The kube-apiserver calls out to a service defined by you to tell it whether a token is valid or not 
+        Used commonly in scenarios where you want to integrate Kubernetes with a remote authentication service 
+    
+Auth Modules for enterprise
+ABAC: Attribute-based access control 
+    defines an access control paradigm whereby access rights are granted to users through the use of policies that combine attributes together. 
+    The ABAC file defines what access a specific user might have to all resources.
+RBAC: Role-based access control 
+    This is the most common authorization mechanism used in K8 and alot of applications end up using RBAC to authorize their service accounts
+    Depends on roles and cluster roles - these rules represent a set of permissions. A role can be defined within the namespace with a role or a clusterwide with a cluster role
+    Permissions can then be granted within a namespace with a role binding or cluster wide with a cluster role binding 
+Webhook 
+    allows you to define what permissions are allowed for a specified user. The Kube API server will send a request with the user and resource attribute data to a remote server that you define, that interprets the request and defines whether a request is allowed or not. 
+    This method works really well if you are trying to integrate with a their party authorization system, or if you want a complex set of rules 
+    
+    
+    
+    
+    
